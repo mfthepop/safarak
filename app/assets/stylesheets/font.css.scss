@@ -1,0 +1,26 @@
+//@font-face{font-family:'yekan';
+//  src:asset-url('BYekan.eot'),
+//  asset-url('BYekan.woff'),
+//  asset-url('BYekan.ttf');}
+//@font-face {
+//  font-family: 'yekan';
+//  src: url(font-path('glyphicons-halflings-regular.eot') + "?#iefix") format('embedded-opentype'),
+//  url(font-path('glyphicons-halflings-regular.woff')) format('woff'),
+//  url(font-path('glyphicons-halflings-regular.ttf'))  format('truetype'),
+//    url(font-path('glyphicons-halflings-regular.svg')) format('svg');
+//}
+
+
+//@font-face {
+//  font-family: 'yekan';
+//  src: url(font-path('Byekan.eot') + "?#iefix") format('embedded-opentype'),
+//  url(font-path('BYekan.woff')) format('woff'),
+//  url(font-path('BYekan.ttf'))  format('truetype');
+////  url(font-path('myfont-webfont.svg') + "#MyFont") format('svg');
+//}
+
+
+@font-face {
+  font-family: 'yekan';
+  src: asset-url('BYekan.eot'), asset-url('BYekan.woff'), asset-url('BYekan.ttf');
+}

@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="panel form-panel large-6 large-offset-3 column"><%= form_for @location, :html => {:multipart => true} do |f| %>
+
+
+        <h4>
+          <%= t(action_name) %>
+          مکان
+        </h4>
+
+        <p>لطفاً تمام فیلد های زیر را پر کنید.</p>
+
+        <% if @location.errors.any? %>
+            <small class="error"><%= @location.errors.count %>اشکال مانع ایجاد این مکان جدید</small>
+        <% end %>
+
+        <div class="field">
+          <%= f.label :name %>
+          <%= f.text_area :name %>
+          <% unless @location.errors[:name].empty? %>
+              <small class="error">
+                <% @location.errors[:name].each do |msg| %>
+                    <%= msg %>,
+                <% end %>
+              </small>
+          <% end %>
+        </div>
+
+        <div class="field">
+          <%= f.label :province %>
+          <%= f.text_area :province %>
+          <% unless @location.errors[:province].empty? %>
+              <small class="error">
+                <% @location.errors[:province].each do |msg| %>
+                    <%= msg %>,
+                <% end %>
+              </small>
+          <% end %>
+        </div>
+
+        <div class="field">
+          <%= f.label :description %>
+          <%= f.text_area :description %>
+          <% unless @location.errors[:description].empty? %>
+              <small class="error">
+                <% @location.errors[:description].each do |msg| %>
+                    <%= msg %>,
+                <% end %>
+              </small>
+          <% end %>
+        </div>
+
+
+        <div class="row collapse">
+          <!--<div class="small-3 large-2 columns">
+            <a class="button postfix">...browse</a>
+          </div>-->
+          <div class="small-6 large-6 columns">
+            <%= f.file_field :avatar %>
+          </div>
+          <div class="small-3 large-4 columns">
+            <span class="postfix">انتخاب عکس</span>
+          </div>
+        </div>
+
+        <div class="actions">
+          <ul class="button-group">
+            <li><%= link_to t('back'), locations_path, class: 'button alert' %></li>
+            <li><%= f.submit nil, class: 'button success' %></li>
+          </ul>
+        </div>
+    <% end %></div>
+</div>

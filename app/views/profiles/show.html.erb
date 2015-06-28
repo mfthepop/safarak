@@ -1,0 +1,91 @@
+<dl class="tabs right" data-tab>
+
+  <dd><a href="#panel2-2">دوستان</a></dd>
+  <dd class="active"><a href="#panel2-1">پروفایل</a></dd>
+
+
+</dl>
+<div class="tabs-content">
+  <div class="content active" id="panel2-1">
+    <div class="row>">
+      <div class="small-6 columns panel small-offset-3">
+        <%= link_to @profile.avatar.url(:medium), class: 'th radius' do
+          image_tag(@profile.avatar.url)
+        end
+        %>
+
+        <p>
+
+          <strong>نام<%#= t('username:')%></strong>
+          <%= @profile.first_name %>
+        </p>
+
+        <p>
+          <strong>نام خاوادگی<%#= t('Last name:') %></strong>
+          <%= @profile.last_name %>
+        </p>
+
+        <p>
+          <strong>شهر<%#= t('City:') %></strong>
+          <%= @profile.city %>
+        </p>
+
+        <p>
+          <strong>استان<%#= t('Province:') %></strong>
+          <%= @profile.province %>
+        </p>
+
+        <p>
+          <strong>تاریخ تولد<%#= t('Date_of_birth:')%></strong>
+          <%= JalaliDate.to_jalali(@profile.date_of_birth).strftime("%d %B %Y") %>
+          <br/>
+        </p>
+        <ul class="button-group">
+          <li>
+            <% if user_signed_in? and current_user != @profile.user %>
+                <%= link_to "دنبال کن", friendships_path(:friend_id => @profile.user), :method => :post, class: 'button small' %>
+            <% end %></li>
+        </ul>
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="content" id="panel2-2">
+    <div class="row friends">
+
+      <div class="small-6 columns">
+        <h4>بدنبال کننده ی</h4>
+        <ul>
+          <% @profile.user.friendships.each do |friendship| %>
+              <li>
+                <%= link_to friendship.friend.profile.first_name + ' ' + friendship.friend.profile.last_name, friendship.friend.profile %>
+
+                <% if current_user == @profile.user %>
+                    (<%= link_to "حذف", friendship, :method => :delete %>)
+                <% end %>
+              </li>
+          <% end %>
+        </ul>
+      </div>
+      <div class="small-6 columns">
+        <h4>دنبال شده توسط</h4>
+        <ul>
+          <% @profile.user.inverse_friends.each do |user| %>
+              <li><%= link_to user.profile.first_name, user.profile %></li>
+          <% end %>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+

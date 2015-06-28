@@ -1,0 +1,37 @@
+<table style="width: 100%">
+  <thead>
+    <tr>
+      <th>نام<%#= t("First name") %></th>
+      <th>نام خاوادگی<%#= t("Last name") %> </th>
+      <th>شهر<%#= t("City") %> </th>
+      <th>استان<%#= t("Province") %> </th>
+      <th>تاریخ تولد<%#= t("Date_of_birth") %> </th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tour.users.each do |user| %>
+      <tr>
+		  <%= profile=user.profile %>
+        <td><%= profile.first_name %></td>
+        <td><%= profile.last_name %></td>
+        <td><%= profile.city %></td>
+        <td><%= profile.province %></td>
+        <td><%=JalaliDate.to_jalali(profile.date_of_birth).strftime("%d %B %Y") %></td>
+        <td>
+          <ul class="button-group">
+            <li><%= link_to t('show'), profile, class: 'button secondary tiny' %></li>
+            <% if can? :update, @profiles %>
+                 <li><%= link_to t('Destroy'), profile, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button secondary tiny' %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+

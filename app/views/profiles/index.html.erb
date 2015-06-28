@@ -1,0 +1,38 @@
+<h3>لیست کاربران</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th><%= t('first_name') %></th>
+      <th><%= t("last_name") %></th>
+      <th><%= t("city") %></th>
+      <th><%= t("province") %></th>
+      <th><%= t("date_of_birth") %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @profiles.each do |profile| %>
+      <tr>
+        <td><%= profile.first_name %></td>
+        <td><%= profile.last_name %></td>
+        <td><%= profile.city %></td>
+        <td><%= profile.province %></td>
+        <td><%= JalaliDate.to_jalali(profile.date_of_birth).strftime("%d %B %Y") %></td>
+       <td>
+          <ul class="button-group">
+            <li><%= link_to t('show'), profile, class: 'button secondary tiny' %></li>
+            <% if can? :update, @proflie %>
+                <li><%= link_to t('destroy'), profile, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button secondary tiny' %></li>
+                <li><%= link_to t("role"), editr_path(profile.id), :class => 'button secondary tiny' %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+

@@ -1,0 +1,7 @@
+یک نقد برای
+<% if activity.trackable %>
+    <%= link_to t(activity.trackable.reviewable_type.downcase)+' '+activity.trackable.reviewable.name, activity.trackable.reviewable %>
+<% else %>
+   که پاک شده است
+<% end %>
+نوشت

@@ -1,0 +1,10 @@
+یک کامنت برای
+<% if activity.trackable %>
+    <%= link_to  t(activity.trackable.commentable_type.downcase)+' '+activity.trackable.commentable.name, activity.trackable.commentable %>
+<% else %>
+    صفحه ای که پاک شده است
+<% end %>
+نوشت
+
+
+

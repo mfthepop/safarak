@@ -1,0 +1,170 @@
+<dl class="tabs right"  data-tab>
+  <dd><a href="#panel2-5">نظرها</a></dd>
+  <dd><a href="#panel2-4">نقدها</a></dd>
+  <dd><a href="#panel2-3">گالری</a></dd>
+  <dd><a href="#panel2-2">تورها</a></dd>
+  <dd class="active"><a href="#panel2-1">توضیحات</a></dd>
+</dl>
+<div  class="tabs-content" >
+  <div class="content active" id="panel2-1">
+    <div class="row>">
+      <div class="small-4 columns">
+
+        <%= link_to @location.avatar.url(:medium), class: 'th radius' do
+          image_tag(@location.avatar.url)
+        end
+        %>
+
+
+        <ul style="list-style: none;margin-top: 10px;">
+          <li class="panel callout">
+            <div style="text-align: center;;">امتیاز متوسط</div>
+            <br/>
+            <div id="star"></div>
+          </li>
+          <li class="panel callout">
+            <div  id="user_star"></div>
+          </li>
+        </ul>
+
+
+
+          <!--<div class="panel callout">امتیاز متوسط</div>
+            <div id="star" ></div></li>
+          <div id="user_star"></div></li>
+        </ul>-->
+      </div>
+      <div class="small-8 columns">
+<!--        <table>
+          <tr>
+            <th>
+              <strong>نام:</strong>
+            </th>
+            <td>
+              <%= @location.name %>
+            </td>
+          </tr>
+
+          <tr>
+            <th>
+              <strong>استان:</strong>
+            </th>
+            <td>
+              <%= @location.province %>
+            </td>
+          </tr>
+        </table>-->
+
+
+
+
+
+        <p>
+          <strong>نام:</strong>
+          <%= @location.name %>
+        </p>
+
+        <p>
+          <strong>استان:</strong>
+          <%= @location.province %>
+        </p>
+
+        <p>
+          <strong>توضیحات:</strong>
+          <%= @location.description %>
+        </p>
+        <ul class="button-group right">
+           <% if can? :update, @location %>
+          <li><%= link_to t('edit'), edit_location_path(@location), class: 'button secondary' %></li>
+          <li><%= link_to t('Create')+' '+t('tour'), new_tour_path( location_id: @location.id), class: 'button success' %></li>
+          <% end %>        
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="content" id="panel2-2">
+    <h4>تور های موجود برای این مکان...</h4>
+
+    <table class="pretty" >
+      <tr>
+        <th><%= 'تاریخ رفت' %></th>
+        <th><%= 'زمان رفت' %></th>
+        <th><%=  'ظرفیت' %></th>
+        <th>افراد ثبت نام کرده'</th>
+        <th><%=  'قیمت' %></th>
+        <th></th>
+      </tr>
+      <% for tour in @location.tours %>
+          <tr>
+            <td><%= JalaliDate.to_jalali(tour.departure_date).strftime("%d/%m/%Y") %></td>
+            <td><%= tour.departure_time %></td>
+            <td><%= tour.quorum %></td>
+            <td><%= tour.users.count %></td>
+            <td><%= tour.price %></td>
+            <td>
+              <ul class="button-group">
+                <% if can? :update, @tour %>
+                <li><%= link_to t('show'), tour, class: 'button secondary tiny' %></li>
+                <li><%= link_to t('edit'), edit_tour_path(tour), class: 'button secondary tiny' %></li>
+                <li><%= link_to t('destroy'), tour, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button secondary tiny' %></li>
+				<% end %>
+              </ul>
+            </td>
+          </tr>
+      <% end %>
+    </table>
+
+
+
+  </div>
+  <div class="content" id="panel2-3"><p>Third panel content goes here...</p></div>
+  <div class="content" id="panel2-4">
+    <dic id="allreviews"><%= reviews @location.reviews %></dic>
+    <%= render 'reviews/form' %>
+  </div>
+  <div class="content" id="panel2-5">
+    <div class="">
+
+      <div id="allcomments"><%= nested_comments @comments.find_all { |comment| comment.parent == nil } %></div>
+      <%= render 'comments/form' %>
+    </div>
+  </div>
+</div>
+
+
+<script>
+	$('#star').raty({
+  readOnly: true,
+  score: <%= @location.average_rating %>,
+  path: '/assets'
+});
+
+<% if user_signed_in? %>
+    $('#user_star').raty({
+      score: <%= @rating.score %>,
+      path: '/assets',
+      click: function(score, evt) {
+        $.ajax({
+          url: '/ratings/' + <%= @rating.id %>,
+          type: 'PATCH',
+          data: { score: score }
+        }).done(function (data){});
+      }
+    }).prepend('<p>امتیازدهی شما</p>');
+<% end %>
+
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

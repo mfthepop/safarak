@@ -1,0 +1,30 @@
+
+
+<table class="profiels" >
+  <thead>
+    <tr>
+      <th><%= t('First name') %></th>
+      <th><%= t('Last name') %></th>
+      <th><%= t('City') %></th>
+      <th><%= t('Province') %></th>
+      <th><%= t('Date of birth') %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% for profile in @profiles %>
+      <tr>
+        <td><%= profile.first_name %></td>
+        <td><%= profile.last_name %></td>
+        <td><%= profile.city %></td>
+        <td><%= profile.province %></td>
+        <td><%= profile.date_of_birth %></td>
+        <td><%= link_to 'Show', profile %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+

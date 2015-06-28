@@ -1,0 +1,39 @@
+<table class="pretty">
+  <tr>
+    <th><%= 'تاریخ رفت' %></th>
+    <th><%=  'زمان رفت' %></th>
+    <th>مقصد</th>
+    <th><%= 'ظرفیت' %></th>
+    <th>افراد ثبت نام کرده'</th>
+    <th><%=  'قیمت' %></th>
+    <th><%=  t('avrage rating') %></th>
+    <th></th>
+  </tr>
+  <% for tour in @tours %>
+       <tr>
+        <td><%= JalaliDate.to_jalali(tour.departure_date).strftime("%d/%m/%Y") %></td>
+        <td><%= tour.departure_time %></td>
+        <td><%= link_to tour.location.name, tour.location %></td>
+        <td><%= tour.quorum %></td>
+        <td><%= tour.users.count %></td>
+        <td><%= tour.price %></td>
+        <td><div id="star-<%= tour.id%>"></div></td>
+        <td>
+          <ul class="button-group">
+            <li><%= link_to 'Show', tour, class: 'button secondary tiny' %></li>
+          </ul>
+        </td>
+      </tr>
+  <script>
+  $('#star-<%= tour.id%>').raty({
+    readOnly: true,
+    score: <%= tour.average_rating %>,
+    path: '/assets'
+  });
+</script>         
+  <% end %>
+</table>
+
+
+
+

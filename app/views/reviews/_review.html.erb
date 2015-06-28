@@ -1,0 +1,19 @@
+<div class="review-panel">
+  <div class="right">
+    <%= link_to review.user.profile, class: 'th radius' do
+      image_tag(review.user.profile.avatar.url(:thumb))
+    end
+    %>
+  </div>
+  <div style="">
+
+    <h4><%= review.user.profile.first_name %></h4>
+    <br/>
+    
+    <p><%= t(review.review_type) %></p>
+
+    <!--<div id="star" ></div>-->
+    <%= review.content %>
+
+  </div>
+</div>

@@ -1,0 +1,72 @@
+
+
+</dl>
+<!--<div  class="tabs-content" >-->
+  <!--<div class="content active" id="panel2-1">-->
+    <div class="row>">
+
+
+
+      <div class="small-6 columns panel small-offset-3">
+        <%= link_to @profile.avatar.url(:medium), class: 'th radius' do
+          image_tag(@profile.avatar.url)
+        end
+        %>
+
+        <p>
+		<p id="notice"><%= notice %></p>	
+		  <strong>نام<%#= t('username:')%></strong>
+		  <%= @profile.first_name %>
+		</p>
+		<p>
+		  <strong>نام خاوادگی<%#= t('Last name:') %></strong>
+		  <%= @profile.last_name %>
+		</p>
+		<p>
+		  <strong>شهر<%#= t('City:') %></strong>
+		  <%= @profile.city %>
+		</p>
+		<p>
+		  <strong>استان<%#= t('Province:') %></strong>
+		  <%= @profile.province %>
+		</p>
+		
+		
+		<%#=form_for [@profile, @user]  do |f| %>
+		
+		<p>
+        <%#= f.collection_select :role, User::ROLES, :to_s, :humanize %>
+		
+		</p>
+		
+		
+
+		
+		<%#= f.submit %>
+		<%# end %>
+		
+		<%= form_tag action: 'updater' , id:@profile.id do %>
+			 <%#= collection_select_tag :role, User::ROLES, :to_s, :humanize , params[:role] %>
+            <%= select_tag :role, options_for_select(User::ROLES) %>
+			<%#= text_field_tag :role, params[:role] %>
+			<%= submit_tag %>
+		<% end %>
+		
+		<p>
+			
+		  <strong>تاریخ تولد<%#= t('Date_of_birth:')%></strong>
+		  <%= JalaliDate.to_jalali(@profile.date_of_birth).strftime("%d %B %Y") %>
+      </div>
+    <!--</div>-->
+  <!--</div>-->
+
+ 
+</div>
+
+
+
+
+
+
+
+

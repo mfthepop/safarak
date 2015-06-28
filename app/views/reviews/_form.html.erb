@@ -1,0 +1,12 @@
+<% if user_signed_in? %>
+    <div style="width:80%;margin: auto;" class="">
+      <%= form_for [@reviewable, @review] , :method => :post , :remote => true do |f|    %>
+          <h4>نقد</h4>
+          <br/>
+          <%= f.text_area :content, :rows => 4 %>
+
+          <%= f.select :review_type, Review::RTYPE.collect{|d| [t(d), d]} %>
+
+          <p><%= f.submit 'ثبت', class:'button secondary'  %></p>
+      <% end %></div>
+<% end %>

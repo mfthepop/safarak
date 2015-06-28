@@ -1,0 +1,59 @@
+<div class="comment_master">
+  <div class="comment_container">
+
+
+    <div class="right" style="margin-left: 30px;">
+      <%= link_to comment.user.profile, class: 'th radius' do
+      image_tag(comment.user.profile.avatar.url(:thumb))
+    end
+    %>
+   </div>
+    <div style="clear: left;"><h4><%= comment.user.profile.first_name %></h4>
+
+    <i><%= JalaliDate.to_jalali(comment.created_at).strftime('%d %B  %Y')+' '+comment.created_at.strftime('%H:%M') %></i>
+    <br/>
+    <br/>
+
+
+      <% if user_signed_in? %>
+          <!--<button class="opener">Open Dialog</button>-->
+          <%= link_to "Reply",
+                      new_polymorphic_path([@commentable, Comment.new], :parent_id => comment),
+                      class: 'button tiny left'
+          %>
+          <div class="showhidecommform">&nbsp;</div>
+      <% end %>
+
+    <p><%= comment.content %></p></div>
+
+
+  </div>
+
+
+
+
+  <div>
+
+    <%= nested_comments comment.children %>
+  </div>
+</div>
+
+<script>
+    $(function() {
+        $( "#dialog" ).dialog({
+            autoOpen: false,
+            show: {
+                effect: "blind",
+                duration: 1000
+            },
+            hide: {
+                effect: "explode",
+                duration: 1000
+            }
+        });
+
+        $( ".opener" ).click(function() {
+            $( "#dialog" ).dialog( "open" );
+        });
+    });
+</script>

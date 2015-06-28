@@ -1,0 +1,31 @@
+<h3>فعالیت دوستان</h3>
+<% @activities.each do |activity| %>
+
+
+
+<div class="activity">
+
+
+  <div class="right" style="margin-left: 30px;">
+    <%= link_to activity.owner.profile, class: 'th radius' do
+      image_tag(activity.owner.profile.avatar(:thumb))
+    end
+    %>
+  </div>
+  <div style="clear: left;"><h4><%= activity.owner.profile.first_name %></h4>
+
+    <i><%= JalaliDate.to_jalali(activity.created_at).strftime('%d %B  %Y')+' '+activity.created_at.strftime('%H:%M') %></i>
+    <br/>
+    <br/>
+
+
+    <%= link_to activity.owner.profile.first_name, activity.owner.profile if activity.owner %>
+    <%= render_activity activity %>
+
+  </div>
+
+
+</div>
+
+<% end %>
+<br/>

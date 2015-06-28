@@ -1,0 +1,21 @@
+ <h3> نمایش تورها<%#=t('listing tours') %></h3>
+
+<br/>
+<%= form_tag 'tours/search', :method=> 'get', :remote => true, id: 'tours_search'  do %>
+  <%= hidden_field_tag :direction, params[:direction] %>
+  <%= hidden_field_tag :sort, params[:sort] %>
+
+
+    <%= text_field_tag :search, params[:search], class:'expand', style: 'width: 300px;display:inline', placeholder: 'جست و جو' %>
+    <%= submit_tag 'برو', :name => nil, class:'button tiny alert'  %>
+
+
+<br/>
+<div id="tours"><%= render 'tours' %></div>
+<% end %>
+
+
+<br/>
+ <% if can? :update, @tour %>
+<%= link_to t('new')+' '+t('tour'), new_tour_path, class: 'button success' %>
+ <% end %>

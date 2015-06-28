@@ -1,0 +1,213 @@
+<html class="no-js" lang="fa" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title><%= content_for?(:title) ? yield(:title) : 'Safarak' %></title>
+
+  <%= stylesheet_link_tag "application" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "vendor/modernizr" %>
+  <%= csrf_meta_tags %>
+
+
+</head>
+
+<body>
+
+<%#= image_tag 'bg/bg.png', class:'bg' %>
+
+<nav class="top-bar" data-topbar>
+  <ul class="title-area">
+    <li class="name">
+      <h1><a href="#"></a></h1>
+    </li>
+    <li class="toggle-topbar menu-icon"><a href="#">منو</a></li>
+  </ul>
+
+  <section class="top-bar-section">
+    <!-- Right Nav Section -->
+    <ul class="right">
+      <li class="has-dropdown">
+        <a href="#">‌گشت</a>
+        <ul class="dropdown">
+          <li><%= link_to 'تورها', tours_path %></li>
+          <li><%= link_to 'کاربران', profiles_path %></li>
+          <li><%= link_to 'مکان ها', locations_path %></li>
+        </ul>
+      </li>
+      <li><%= link_to 'درباره ما', controller: 'home', action: 'about' %></li>
+      <li><%= link_to 'تماس با ما', controller: 'home', action: 'contact' %></li>
+      <li><%= link_to 'خانه', controller: 'home' %></li>
+    </ul>
+
+    <!-- Left Nav Section -->
+    <ul class="left">
+      <li class="has-form">
+        <div class="row collapse" id="search-box">
+          <%= form_tag action: "search", controller: 'home', :method => 'get' do %>
+              <div class=" small-4  columns">
+                <%= submit_tag 'جست و جو', :name => nil, class: 'tiny alert button expand' %>
+              </div>
+              <div class=" small-8  columns">
+                <%= text_field_tag :search, params[:search] %>
+              </div>
+          <% end %>
+        </div>
+
+    </ul>
+  </section>
+</nav>
+<div class="row">
+  <div class="small-5 columns">
+    <h1><%= image_tag "misc/logo.gif" %></h1>
+  </div>
+  <div class="small-7 columns">
+    <div class="button-bar">
+
+      <ul class="right button-group">
+        <% if user_signed_in? %>
+            <%= link_to "رویدادها", activities_index_path, :class => "button" %>
+            <%= link_to "خروج", destroy_user_session_path, method: :delete, :class => "button" %>
+
+            <% if current_user.profile %>
+                <%= link_to 'تغییر پروفایل', edit_profile_path(current_user.profile), :class => "button" %>
+                <strong>
+                  <% if current_user.profile %>
+                      <%= link_to current_user.profile, class: 'th radius', style: 'position: relative; float:auto;' do
+                        image_tag(current_user.profile.avatar.url(:thumb))
+                      end
+                      %>
+
+                      </strong>
+                  <% else %>
+                      <%= link_to 'ساخت پروفایل', new_profile_path, :class => "button" %>
+                  <% end %>
+            <% end %>
+
+
+        <% else %>
+            <%= link_to "عضویت", new_user_registration_path, :class => "button" %>
+            <a href="#" class="button" data-reveal-id="login-menu">ورود</a>
+        <% end %>
+
+      </ul>
+
+
+    </div>
+  </div>
+</div>
+
+<!--Login & Sign up-->
+
+
+<div id="login-menu" class="reveal-modal panel callout" data-reveal>
+  <a class="close-reveal-modal" style="display: block; float: left;">&#215;</a>
+
+  <div class="">
+    <fieldset>
+      <%= form_for(:user, :url => session_path(:user)) do |f| %>
+          <h5>
+            ورود:
+          </h5>
+
+          <div class="row collapse">
+            <div class="small-9 large-10 columns">
+              <%= f.text_field :email %>
+            </div>
+            <div class="small-3 large-2 columns">
+              <span class="postfix"><%= t('email') %></span>
+            </div>
+          </div>
+          <div class="row collapse">
+            <div class="small-9 large-10 columns">
+              <%= f.password_field :password %>
+            </div>
+            <div class="small-3 large-2 columns">
+              <span class="postfix"> <%= t('password') %></span>
+            </div>
+          </div>
+          <%= f.check_box :remember_me %>
+          <%= f.label 'مرا به خاطر بسپار' %>
+          <div class="row collapse">
+            <div class="large-12 columns">
+              <ul class="button-group right">
+                <li> <%= f.submit 'ورود', class: 'button tiny success' %></li>
+                <li><%= link_to 'رمز خود را فراموش کردهام', new_password_path(:user), class: 'tiny alert button' %></li>
+              </ul>
+            </div>
+          </div>
+      <% end %>
+    </fieldset>
+  </div>
+
+
+</div>
+<!-- End Header and Nav -->
+<div class="row content">
+  <div class="large-12 columns">
+    <%= yield %>
+  </div>
+
+</div>
+
+<!--type: 'notice'-->
+<!--text: message-->
+<!--nonblock: true, # So that user can see through it on mouse hover-->
+<!--nonblock_opacity: 0.2-->
+<!--addclass: "stack-topleft"-->
+<!--stack: @stack_topleft-->
+
+
+
+
+<!-- Footer -->
+
+<footer class="row">
+  <div class="large-12 columns">
+    <div class="row">
+      <div class="large-6 columns">
+        <p>no ©Copyright<br/> University of Tehran Spring 93 Internet Engineering Course</p>
+      </div>
+      <div class="large-6 columns">
+        <ul class="inline-list right" id="legal">
+          <li><a href="#">پالیسی</a></li>
+          <li>|</li>
+          <li><a href="#">حقوقی</a></li>
+          <li>|</li>
+          <li><a href="#">کپیرایت</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+<% unless flash.empty? %>
+
+<script type="text/javascript">
+  <% flash.each do |key, value| %>
+    $(document).ready(function(){
+        $.pnotify(
+                {
+                    type: '<%= key %>',
+
+                    text: '<%= value %>',
+                    nonblock:'true',
+                    nonblock_opacity: 0.2,
+                    styling: 'jqueryui'
+                }
+        );
+    });
+    <% end %>
+</script>
+<% end %>

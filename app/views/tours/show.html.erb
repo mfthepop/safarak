@@ -1,0 +1,196 @@
+<div class="row">
+  <div class="large-12 columns">
+    <dl class="tabs right" data-tab>
+      <dd><a href="#panel2-5"><%= t('comments') %></a></dd>
+      <dd><a href="#panel2-4">نقدها</a></dd>
+      <dd><a href="#panel2-3">گالری</a></dd>
+      <dd><a href="#panel2-2">اعضا</a></dd>
+      <dd class="active"><a href="#panel2-1">توضیحات</a></dd>
+
+
+    </dl>
+    <div class="tabs-content">
+      <div class="content active" id="panel2-1">
+        <div class="row>">
+          <div class="small-4 columns panel" id="location-grid">
+
+            <%= link_to @tour.location.avatar.url(:medium), class: 'th radius' do
+              image_tag(@tour.location.avatar.url)
+            end
+            %>
+
+
+            <ul>
+              <li><h4><%= @tour.location.name %></h4></li>
+              <li><%= @tour.location.province %></li>
+              <br/>
+              <li class="panel callout">
+                <div>امتیاز متوسط</div>
+                <div id="star"></div>
+              </li>
+              <li>
+                <div id="user_star"></div>
+              </li>
+            </ul>
+
+          </div>
+          <div class="small-8 columns">
+
+
+            <p>
+              <strong>تاریخ رفت</strong>
+              <%= JalaliDate.to_jalali(@tour.departure_date).strftime("%d %B %Y") %>
+            </p>
+
+            <p>
+              <strong>زمان رفت</strong>
+              <%= @tour.departure_time.strftime('%H:%M') %>
+            </p>
+
+            <p>
+              <strong>قیمت</strong>
+              <%= @tour.price %> تومان
+            </p>
+
+            <p>
+              <strong>مقصد</strong>
+              <%= @tour.location.name %>
+            </p>
+
+            <p>
+              <strong>آدرس</strong>
+              <%= @tour.departure_location %>
+            </p>
+
+            <p>
+              <strong>ظرفیت</strong>
+              <%= @tour.quorum %>
+            </p>
+
+            <p>
+              <strong>افراد ثبت نام کرده</strong>
+              <%= @tour.users.count %>
+            </p>
+
+
+          </div>
+        </div>
+        <div class="row">
+          <div class="small-12 columns">
+            <ul class="button-group right">
+              <% if can? :update, @tour %>
+                  <li><%= link_to t('edit'), edit_tour_path(@tour), class: 'button secondary' %></li>
+              <% end %>
+              <li><%= link_to t('Reserve')+' '+t('tour'), new_booking_path(tour_id: @tour.id), class: 'button success' if user_signed_in? %></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="content" id="panel2-2">
+        <p>
+
+        <div id="profiles"><%= render :partial => 'tours/profiles_in_a_tour' %></div>
+        </p>
+      </div>
+      <div class="content" id="panel2-3">
+
+        <div class="row clear-fix">
+
+
+          <br/>
+
+          <div class="row">
+            <div class="small-10 small-offset-1 columns">
+              <ul class="clearing-thumbs" data-clearing>
+                <% @tour.pictures.each do |picture| %>
+                    <li>
+                      <%= link_to picture.avatar.url, class: 'th radius' do
+                        image_tag(picture.avatar.url(:thumb))
+                      end
+                      %>
+                    </li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="small-6 columns right" style="margin-top: 300px;">
+              <div id="add_picture" class=" panel form-panel" style="float: left;">
+                <h5 id="add_picture_open">بارگذاری عکس</h5>
+                <%= render 'pictures/form' %>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+      </div>
+      <div class="content" id="panel2-4">
+        <
+        <div class="row">
+          <div class="columns small-6 small-offset-3">
+            <ul class="button-group">
+              <% for rtype in Review::RTYPE %>
+                  <li><%= link_to t(rtype), {controller: 'tours', action: 'show', id: @tour.id, review_type: rtype}, class: 'button tiny' %></li>
+              <% end %></ul>
+
+          </div>
+        </div>
+
+        <div id="allreviews"><%= reviews (params[:review_type] ? @tour.reviews.where(review_type: params[:review_type]) : @tour.reviews) %></div>
+        <%= render 'reviews/form' %>
+      </div>
+      <div class="content" id="panel2-5">
+
+
+        <div id="allcomments">
+
+          <%= nested_comments @comments.find_all { |comment| comment.parent == nil } %>
+        </div>
+        <%= render 'comments/form' %>
+
+      </div>
+    </div>
+
+    <script>
+        $('#star').raty({
+            readOnly: true,
+            score: <%= @tour.average_rating %>,
+            path: '/assets'
+        });
+
+        <% if current_user %>
+        $('#user_star').raty({
+            score: <%= @rating.score %>,
+            path: '/assets',
+            click: function (score, evt) {
+                $.ajax({
+                    url: '/ratings/' + <%= @rating.id %>,
+                    type: 'PATCH',
+                    data: { score: score }
+                }).done(function (data) {
+                });
+            }
+        }).prepend('<p>امتیازدهی شما</p>').parent().addClass('panel callout');
+        <% end %>
+
+        $('.star').raty({
+            readOnly: true,
+            score: <%= @tour.average_rating %>,
+            path: '/assets'
+        });
+
+    </script>
+
+
+  </div>
+</div>
+
+<!--<div id="dialog" title="Basic dialog">
+  <p>This is an animated dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
+</div>-->
+
+

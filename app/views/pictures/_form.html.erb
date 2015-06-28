@@ -1,0 +1,12 @@
+<div class="" style="padding:0;">
+  <% require 'jalali_date_helper.rb' %>
+  <%= form_for @picture, :html => {:multipart => true}, style:'display: none;' do |form| %>
+      <p>متن</p>
+      <%= form.text_field :caption %>
+      <%= form.jalali_date :date_taken %>
+      <%= form.file_field :avatar %>
+      <%= hidden_field_tag :location_id, @tour.location.id %>
+      <%= hidden_field_tag :tour_id, @tour.id %>
+      <%= form.submit 'بارگذاری', class: ' tiny button secondary' %>
+  <% end %>
+</div>

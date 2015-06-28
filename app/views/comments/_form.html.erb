@@ -1,0 +1,15 @@
+
+
+<% if user_signed_in? %>
+    <div style="width:80%;margin: auto;" class="">
+
+      <%= form_for [@commentable, @comment]  , :method => :post , :remote => true do |f|    %>
+          <h4>ثبت نظر</h4>
+          <%= f.hidden_field :parent_id %>
+          <br/>
+          <%= f.text_area :content, :rows => 4 %>
+          <p><%= f.submit 'ثبت', class:'button secondary'  %></p>
+      <% end %></div>
+<% end %>
+
+

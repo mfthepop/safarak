@@ -1,0 +1,102 @@
+$(function () {
+    $(document).foundation();
+});
+
+
+$(document).ready(function () {
+
+    calender_tool_tip();
+
+    populate_news(5);
+
+    error_highlight();
+
+//    openclose();
+
+
+}); //end ready
+
+
+function calender_tool_tip() {
+    $('#calender').find('td').each(function () {
+        var temp = $(this).attr('class');
+        if (temp) {
+            switch (temp) {
+                case "date-upcoming":
+                    $(this).html(calender_tool_tip_string("upcoming event", $(this).html()));
+                    break;
+                case "date-canceled":
+                    $(this).html(calender_tool_tip_string("canceled event", $(this).html()));
+                    break;
+                case "date-signed-up":
+                    $(this).html(calender_tool_tip_string("You've signed up for this event", $(this).html()));
+                    break;
+            }
+        }
+
+
+    });
+}
+
+
+function calender_tool_tip_string(title, content) {
+    return '<span  data-tooltip title="' + title + '" class="has-tip">' + content + '</span>';
+}
+
+function populate_news(n) {
+    var news = $('#news');
+    news.html('');
+    for (var i = 0; i < n; i++) {
+        news.append('<p>اخبار...<a class="button secondary tiny left">بیشتر بخوانید >></a></p><hr/>');
+    }
+
+}
+
+function error_highlight() {
+    $('.form-panel').find('.field_with_errors').each(function () {
+        var label = $(this).find('label');
+        label.addClass('error');
+        var input = $(this).find('input');
+        input.addClass('error');
+
+
+        var parent = $(this).parent();
+        if (label.length == 0) {
+            parent.addClass('error');
+//		parent.append('<small class="error"><%= %></small>');
+        }
+    });
+}
+
+
+function openclose() {
+    $('#add_picture_open').click(
+            function () {
+                $('#add_picture form').slideToggle(false);
+                $(this).toggleClass('close');
+            }
+
+
+
+//                function() {
+//                    $('#add_picture form').slideDown(300);
+//                    $(this).addClass('close');
+//                },
+//                function() {
+//                    $('#add_picture form').fadeOut(600);
+//                    $(this).removeClass('close');
+//                }
+    ); // end toggle
+}; // end ready
+
+
+
+
+
+
+
+
+
+
+
+

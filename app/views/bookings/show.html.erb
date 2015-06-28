@@ -1,0 +1,27 @@
+<div class="row">
+  <br/>
+  <div class="column small-6 small-offset-3">
+    <div class="panel form-panel" >
+
+  <h4>رزرو</h4>
+
+  <p>
+  <strong>شماره تور</strong>
+    <br/>
+  <%= @booking.tour_id %>
+</p>
+
+<p>
+  <strong>نام</strong>
+  <br/>
+  <%= @booking.user.profile.first_name+' '+@booking.user.profile.last_name %>
+</p>
+
+<p>
+  <strong>مبلغ پرداخت شده</strong>
+  <br/>
+  <%= @booking.tour.price %>
+</p>
+
+
+</div></div></div>

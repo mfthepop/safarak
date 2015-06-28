@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  departure_date: 2014-04-06
+  departure_time: 2014-04-06 13:37:31
+  departure_location: MyString
+  quorum: 1
+  registered: 1
+
+two:
+  departure_date: 2014-04-06
+  departure_time: 2014-04-06 13:37:31
+  departure_location: MyString
+  quorum: 1
+  registered: 1

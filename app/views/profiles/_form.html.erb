@@ -1,0 +1,84 @@
+<div class="row">
+  <div class="panel form-panel large-6 large-offset-3 column"><%= form_for(@profile) do |f| %>
+        <% if @profile.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
+
+              <ul>
+                <% @profile.errors.full_messages.each do |msg| %>
+                    <li><%= msg %></li>
+                <% end %>
+              </ul>
+            </div>
+        <% end %>
+
+        <h4 class="subheader">
+          <span><%= t(action_name)%> پروفایل</span>
+          <br/>
+          لطفا تمام فیلد های زیر را پر کنید
+        </h4>
+
+        <div class="field">
+          <%= f.label :first_name %>
+          <br>
+          <%= f.text_field :first_name %>
+        </div>
+        <div class="field">
+          <%= f.label :last_name %>
+          <br>
+          <%= f.text_field :last_name %>
+        </div>
+        <div class="field">
+          <%= f.label :age %>
+          <br>
+          <%= f.number_field :age %>
+        </div>
+        <div class="field">
+          <%= f.label :gender %>
+          <br>
+          <%= f.select :gender, options_for_select(Profile::GENDER) %>
+        </div>
+        <div class="field">
+          <%= f.label :city %>
+          <br>
+          <%= f.text_field :city %>
+        </div>
+        <div class="field">
+          <%= f.label :province %>
+          <br>
+          <%= f.text_field :province %>
+        </div>
+        <div class="field">
+          <%= f.label :date_of_birth %>
+          <br>
+          <%= f.jalali_date :date_of_birth,
+                            start_year: JalaliDate.now.year-80,
+                            end_year: JalaliDate.now.year
+          %>
+        </div>
+            <div class="row collapse">
+          <div class="small-3 large-2 columns">
+            <!--<a class="button postfix">...browse</a>-->
+          </div>
+          <div class="small-6 large-6 columns">
+            <%= f.file_field :avatar %>
+          </div>
+          <div class="small-3 large-4 columns">
+            <span class="postfix">انتخاب عکس</span>
+          </div>
+        </div>
+        
+        <div class="actions">
+          <!--<%= hidden_field_tag :user_id %>-->
+          <div class="actions">
+            <ul class="button-group">
+              <li><%= link_to t('back'), locations_path, class: 'button alert' %></li>
+              <li><%= f.submit nil, class: 'button success' %></li>
+            </ul>
+          </div>
+        </div>
+
+
+    <% end %>
+  </div>
+</div>

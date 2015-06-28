@@ -1,0 +1,93 @@
+<div class="row">
+<div class="panel form-panel large-6 large-offset-3 column"><%= form_for(@tour) do |f| %>
+
+      <% require 'jalali_date_helper.rb' %>
+      <% require 'jalali_date.rb' %>
+      <h4>
+        <%= t(action_name)  %>
+        <%= t('tour') %>
+        <br/>
+        لطفاً تمام فیلد های زیر را پر کنید.
+      </h4>
+
+
+  <% if @tour.errors.any? %>
+      <small class="error"><%= @tour.errors.count %>اشکال مانع ایجاد این مکان جدید </small>
+  <% end %>
+
+
+      <div class="field">
+        <%= f.label :name %><br>
+        <%= f.text_area :name %>
+        <% unless @tour.errors[:name].empty?%>
+            <small class="error">
+              <% @tour.errors[:name].each do |msg| %>
+                  <%= msg %>,
+              <% end %>
+            </small>
+        <% end %>
+      </div>
+
+
+  <div class="field">
+    <%= f.label :departure_date %><br>
+    <%= f.jalali_date :departure_date,
+                      start_year: JalaliDate.now.year,
+                      end_year: JalaliDate.now.year+3
+                        %>
+  </div>
+  <div class="field">
+    <%= f.label :departure_time %><br>
+    <%= f.time_select :departure_time, minute_step: 5 %>
+
+  </div>
+  <div class="field">
+    <%= f.label :departure_location %><br>
+    <%= f.text_area :departure_location %>
+    <% unless @tour.errors[:departure_location].empty?%>
+        <small class="error">
+          <% @tour.errors[:departure_location].each do |msg| %>
+              <%= msg %>,
+              <% end %>
+        </small>
+    <% end %>
+  </div>
+  <div class="field">
+    <%= f.label :quorum %><br>
+    <%= f.number_field :quorum %>
+    <% unless @tour.errors[:quorum].empty?%>
+        <small class="error">
+          <% @tour.errors[:quorum].each do |msg| %>
+              <%= msg %>,
+          <% end %>
+        </small>
+    <% end %>
+  </div>
+  <div class="field">
+     <%= f.label :price %><br>
+      <%= f.number_field :price %>
+    <% unless @tour.errors[:price].empty?%>
+        <small class="error">
+          <% @tour.errors[:price].each do |msg| %>
+              <%= msg %>,
+          <% end %>
+        </small>
+    <% end %>
+    </div>
+  <div class="field">
+      <% if params[:location_id] %>
+          <%= hidden_field_tag :location_id, params[:location_id]%>
+      <% else %>
+          <%= select_tag :location_id, options_for_select(Location.all.collect {|l| [l.name, l.id]}) %>
+      <% end %>
+    </div>
+      <div class="actions">
+        <ul class="button-group" style="position: relative; left: 100px;">
+          <li><%= link_to t('back'), tours_path, class: 'button alert' %></li>
+          <li><%= f.submit nil, class: 'button success' %></li>
+        </ul>
+      </div>
+
+
+<% end %>
+</div></div>

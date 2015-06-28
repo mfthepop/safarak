@@ -1,0 +1,38 @@
+
+<table>
+  <thead>
+    <tr>
+      <th><%= t("name") %></th>
+      <th><%=  t("province") %></th>
+      <th><%=  t("avrage rating") %></th>
+	  <th></th>	
+    </tr>
+  </thead>
+
+  <tbody>
+  <% for location in @locations %>
+      <tr>
+        <td><%= location.name %></td>
+        <td><%= location.province %></td>
+        <td><div id="star-<%= location.id%>"></div></td> 
+        <td>
+                 <ul class="button-group">
+            <li><%= link_to 'Show',location, class: 'button secondary tiny' %></li>
+          </ul> 
+        </td>       
+      </tr>
+      	  <script>
+	  $('#star-<%= location.id%>').raty({
+		readOnly: true,
+		score: <%= location.average_rating %>,
+		path: '/assets'
+	  });
+	</script>         
+
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+

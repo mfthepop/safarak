@@ -1,0 +1,27 @@
+<div class="panel"><%= form_for(@booking) do |f| %>
+  <% if @booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+
+      <ul>
+      <% @booking.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+    <p>
+      قیمت ااین تور
+      <%= Tour.find(params[:tour_id]).price %>
+      تومان می باشد.
+      <br/>
+      آیا مایل به خریداری آن هستید؟
+    </p>
+
+  <div class="actions">
+    <%= hidden_field_tag :tour_id, params[:tour_id]%>
+    <%= f.submit 'رزرو' , class:'button success tiny'%>
+  </div>
+<% end %>
+</div>

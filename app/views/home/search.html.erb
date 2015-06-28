@@ -1,0 +1,36 @@
+<dl class="tabs right" data-tab>
+  <dd class="active"><a href="#panel2-4"><%= t("tours") %></a></dd>
+  <dd><a href="#panel2-3"><%= t("locations")%></a></dd>
+  <dd><a href="#panel2-2"><%= t("profiles")%></a></dd>
+
+</dl>
+<div class="tabs-content">
+  <div  class="content active" id="panel2-4">
+    <p><div id="tours" ><%= render :partial => "home/tours_searched_from_home" %></div></p>
+  </div> 
+  
+   <div class="content" id="panel2-3">
+     <p><div id="locations"><%= render :partial => "home/locations_searched_from_home" %></div></p>
+  </div>
+  
+  <div class="content" id="panel2-2">
+	 <p><div id="profiles"><%= render :partial => "home/profiles_searched_from_home" %></div></p>
+	 </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

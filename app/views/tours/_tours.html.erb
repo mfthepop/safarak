@@ -1,0 +1,45 @@
+<div class="row"><div class="large-12 column"><table class="pretty">
+  <tr>
+    <th><%= sortable 'departure_date', 'تاریخ رفت' %></th>
+    <th><%= sortable 'departure_time', 'زمان رفت' %></th>
+    <th>مقصد</th>
+    <th><%= sortable 'quorum', 'ظرفیت' %></th>
+    <th>افراد ثبت نام کرده'</th>
+    <th><%= sortable 'price', 'قیمت' %></th>
+    <th>امتیاز متوسط</th>
+    <th></th>
+  </tr>
+
+  <% for tour in @tours %>
+      <tr>
+        <td><%= JalaliDate.to_jalali(tour.departure_date).strftime("%d %b %Y") %></td>
+        <td><%= tour.departure_time.strftime('%H:%M') %></td>
+        <td><%= link_to tour.location.name, tour.location %></td>
+        <td><%= tour.quorum %></td>
+        <td><%= tour.users.count %></td>
+        <td><%= tour.price %></td>
+        <td><div class="star" id="star-<%= tour.id%>"></div></td>
+        <td>
+          <ul class="button-group">
+            <li><%= link_to t('show'), tour, class: 'button secondary tiny' %></li>
+            <% if can? :update, @tour %>
+                <li><%= link_to t('edit'), edit_tour_path(tour), class: 'button secondary tiny' %></li>
+                <li><%= link_to t('Destroy'), tour, method: :delete, data: { confirm: 'Are you sure?' }, class: 'button secondary tiny' %></li>
+            <% end %>
+          </ul>
+        </td>
+      </tr>
+      <script>
+          $('#star-<%= tour.id%>').raty({
+              readOnly: true,
+              score: <%= tour.average_rating %>,
+              path: '/assets'
+          });
+      </script>
+  <% end %>
+</table>
+<%= will_paginate @tours %>
+
+
+
+</div></div>
